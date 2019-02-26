@@ -8,7 +8,10 @@ defmodule E.MixProject do
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      dialyzer: dialyzer()
+      dialyzer: dialyzer(),
+      docs: [extras: ["README.md"], main: "readme"],
+      package: package(),
+      description: description()
     ]
   end
 
@@ -25,9 +28,7 @@ defmodule E.MixProject do
     [
       {:mix_test_watch, "~> 0.5", only: :dev, runtime: false},
       {:dialyxir, "~> 1.0.0-rc.3", only: [:test, :dev], runtime: false},
-      {:ex_doc, "~> 0.19", only: [:test, :dev], runtime: false},
-      {:jason, "~> 1.1"},
-      {:httpoison, "~> 1.5"}
+      {:ex_doc, "~> 0.19", only: [:test, :dev], runtime: false}
     ]
   end
 
@@ -35,5 +36,17 @@ defmodule E.MixProject do
     [
       flags: [:unmatched_returns, :error_handling, :race_conditions, :underspecs]
     ]
+  end
+
+  defp package do
+    [
+      maintainers: ["your name"],
+      licenses: ["Apache-2.0"],
+      links: %{"GitHub" => "some github"}
+    ]
+  end
+
+  defp description() do
+    "A description"
   end
 end
