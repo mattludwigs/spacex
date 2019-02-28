@@ -1,9 +1,9 @@
-defmodule E.MixProject do
+defmodule SpaceX.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :e,
+      app: :spacex,
       version: "0.1.0",
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
@@ -19,7 +19,7 @@ defmodule E.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {E.Application, []}
+      mod: {SpaceX.Application, []}
     ]
   end
 
@@ -28,7 +28,9 @@ defmodule E.MixProject do
     [
       {:mix_test_watch, "~> 0.5", only: :dev, runtime: false},
       {:dialyxir, "~> 1.0.0-rc.3", only: [:test, :dev], runtime: false},
-      {:ex_doc, "~> 0.19", only: [:test, :dev], runtime: false}
+      {:ex_doc, "~> 0.19", only: [:test, :dev], runtime: false},
+      {:httpoison, "~> 1.5"},
+      {:jason, "~> 1.1"}
     ]
   end
 
