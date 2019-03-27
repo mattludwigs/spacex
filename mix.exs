@@ -36,7 +36,7 @@ defmodule SpaceX.MixProject do
 
   defp dialyzer() do
     [
-      flags: [:unmatched_returns, :error_handling, :race_conditions, :underspecs]
+      flags: [:unmatched_returns, :error_handling, :race_conditions]
     ]
   end
 

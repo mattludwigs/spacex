@@ -1,4 +1,4 @@
 defmodule SpaceXTest do
   use ExUnit.Case
-  doctest SpaceX 
+  doctest SpaceX
 end

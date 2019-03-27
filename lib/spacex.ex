@@ -1,41 +1,43 @@
 defmodule SpaceX do
+  defmodule Request do
+    @opaque t :: %__MODULE__{}
 
-  def get(%{endpoint: endpoint}) do
-    base_url = "https://api.spacexdata.com/v3"
-    HTTPoison.get(base_url <> endpoint)
-  end
+    @enforce_keys [:endpoint]
+    defstruct endpoint: nil
 
-  def parse_response(response) do
-    Jason.decode(response.body)
-  end
+    @spec new(String.t()) :: t
+    def new(endpoint) do
+      %__MODULE__{endpoint: endpoint}
+    end
 
-  def get_info() do
-    endpoint = "/info"
+    @doc """
+    Get the endpoint for the request
+    """
+    @spec endpoint(t) :: String.t()
+    def endpoint(%__MODULE__{endpoint: endpoint}), do: endpoint
 
-    with {:ok, response} <- get(endpoint),
-         {:ok, _} = okay <- Jason.decode(response.body) do
-      okay
-    else
-      error -> error
+    @spec run_request(t) :: {:ok, any} | {:error, any}
+    def run_request(%__MODULE__{endpoint: endpoint}) do
+      base_url = "https://api.spacexdata.com/v3"
+
+      case HTTPoison.get(base_url <> endpoint) do
+        {:ok, response} -> parse_response(response)
+        error -> error
+      end
+    end
+
+    defp parse_response(response) do
+      Jason.decode(response.body)
     end
   end
 
-  @spec get_rockets() :: map()
-  def get_rockets() do
-    %{
-      endpoint: "/rockets"
-    }
+  @spec info() :: Request.t()
+  def info() do
+    Request.new("/info")
   end
 
-  @spec gets_rockets() :: {:ok, map()} | {:error, any()}
-  def gets_rockets() do
-    endpoint = "/rockets"
-
-    with {:ok, response} <- get(endpoint),
-         {:ok, _} = okay <- Jason.decode(response.body) do
-      okay
-    else
-      error -> error
-    end
+  @spec rockets() :: Request.t()
+  def rockets() do
+    Request.new("/rockets")
   end
 end
